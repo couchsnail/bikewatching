@@ -9,4 +9,9 @@ body {
     padding: 1em;
   }
 
-  
+  .logo {
+    width: 24px; /* Adjust size */
+    height: auto;
+    vertical-align: middle; /* Align with text */
+    margin-right: 8px; /* Add space between logo and text */
+}
