@@ -13,13 +13,25 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
 </head>
 <body>
-    <h1>
-        <img src="assets/favicon.svg" alt="Bikewatching Logo" class="logo">
-        Bikewatching
-    </h1>
+    <header id="header-container">
+        <h1>
+            <img src="assets/favicon.svg" alt="Bikewatching Logo" class="logo">
+            Bikewatching
+        </h1>
+        <div id="time-filter">
+            <label for="time-slider">
+                Filter by time:
+                <time id="selected-time"></time>
+                <em id="any-time">(any time)</em>
+            </label>
+            <input type="range" id="time-slider" min="-1" max="1440" value="-1">
+        </div>
+    </header>
+    
     <div id="map">
         <svg></svg>
     </div>
+    <div id="tooltip" class="tooltip"></div>
 
     <!-- Mapbox GL JS JavaScript -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
