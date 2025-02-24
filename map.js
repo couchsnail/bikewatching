@@ -94,6 +94,7 @@ map.on('load', async () => {
         console.log('Loaded JSON Data:', jsonData);
 
         let stations = jsonData.data.stations;
+        let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
 
         // Select SVG and bind data
         let circles = svg.selectAll('circle')
@@ -104,7 +105,8 @@ map.on('load', async () => {
             .attr('fill', 'steelblue')
             .attr('stroke', 'white')
             .attr('stroke-width', 1)
-            .attr('opacity', 0.8);
+            .attr('opacity', 0.6)
+            .style("--departure-ratio", d => stationFlow(d.departures / d.totalTraffic));
 
         updatePositions();
 
@@ -126,7 +128,7 @@ map.on('load', async () => {
             .domain([0, d3.max(updatedStations, d => d.totalTraffic)])
             .range([0, 25]);
 
-        // Time slider fix
+    // Time slider fix
     const timeSlider = document.getElementById('time-slider');
     const selectedTime = document.getElementById('selected-time');
     const anyTimeLabel = document.getElementById('any-time');
@@ -152,7 +154,10 @@ map.on('load', async () => {
         circles
         .data(filteredStations, (d) => d.short_name)  // Ensure D3 tracks elements correctly
         .join('circle')
-        .attr('r', (d) => radiusScale(d.totalTraffic));
+        .attr('r', (d) => radiusScale(d.totalTraffic))
+        .style('--departure-ratio', (d) =>
+            stationFlow(d.departures / d.totalTraffic),
+          );
     }
 
     function updateTimeDisplay() {
